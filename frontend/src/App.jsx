@@ -680,10 +680,11 @@ const App = () => {
           {/* Top text */}
           <div className="hero-text">
             <p className="hero-eyebrow">Thinking of<br />studying abroad?</p>
-            <h1 className="hero-headline">
+            <h2 className="hero-headline">
               Then Why Not<br />
-              Choose <span className="hero-japan-accent">Japan</span>
-            </h1>
+              Choose<br />
+              <span className="hero-japan-accent">Japan</span>
+            </h2>
           </div>
 
           {/* Bottom badges */}
@@ -738,7 +739,7 @@ const App = () => {
 
       {/* Welcome JUE Section [NEW] */}
       <section className="welcome-jue reveal">
-        <h2 className="welcome-jue-title">Welcome to Japan University of Economics</h2>
+        <h2 className="welcome-jue-title">Welcome to Japan University of Economics <br className="mobile-only" /> (JUE)</h2>
         <div className="video-section">
           <div className="video-container">
             <iframe

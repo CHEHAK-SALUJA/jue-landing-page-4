@@ -160,7 +160,7 @@ h3 {
 /* Main bold headline */
 .hero-headline {
   font-family: 'Oswald', sans-serif !important;
-  font-size: clamp(3.2rem, 7.5vw, 5rem);
+  font-size: clamp(2.8rem, 6.5vw, 4.4rem); /* Slightly reduced from 3.2-5rem */
   font-weight: 700;
   color: #E1F5FE;
   text-transform: uppercase; 
@@ -189,13 +189,18 @@ h3 {
   letter-spacing: 2px;
   display: inline-block;
   filter: drop-shadow(0 0 8px rgba(240, 196, 0, 0.3));
+  cursor: pointer;
   position: relative;
+  z-index: 5; 
+  pointer-events: auto !important;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  margin-left: 10px;
+  margin-left: 0; /* Adjusted since it is on a new line now */
   vertical-align: middle;
 }
 
-.hero-japan-accent:hover {
+.hero-japan-accent:hover,
+.hero-japan-accent:active,
+.hero-japan-accent:focus {
   transform: scale(1.1) rotate(-2deg);
   filter: drop-shadow(0 0 15px rgba(240, 196, 0, 0.5));
 }
@@ -248,7 +253,7 @@ h3 {
 }
 
 .hero-tagline-strip {
-  background: #E1F5FE; /* Light white */
+  background: #ffffff; /* Light white */
   color: #003B6F; /* Matching blue text */
   padding: 12px 20px;
   text-align: left;
@@ -399,23 +404,23 @@ h3 {
 }
 
 .welcome-jue {
-  padding: 80px 20px 80px; /* Increased padding slightly for premium feel */
-  background: var(--primary-color, #003B6F);
+  padding: 80px 20px 80px; 
+  background: #e9ecef; /* Light Grey Background */
   text-align: center;
-  color: #fff;
+  color: var(--primary-color, #003B6F); /* Navy Blue Text */
 }
 
-  .welcome-jue-title {
-    font-size: clamp(2.2rem, 8vw, 3.5rem) !important; /* Made it significantly bigger for mobile (8vw) and desktop */
-    color: #fff !important;
-    white-space: normal !important;
-    text-align: center !important;
-    width: 100% !important;
-    margin: 0 auto 40px !important; /* Ensured margin auto for center align and bottom space */
-    letter-spacing: -0.5px !important;
-    font-family: 'Playfair Display', serif !important;
-    line-height: 1.2 !important;
-  }
+.welcome-jue-title {
+  font-size: clamp(2.2rem, 8vw, 3.5rem) !important;
+  color: var(--primary-color, #003B6F) !important;
+  white-space: normal !important;
+  text-align: center !important;
+  width: 100% !important;
+  margin: 0 auto 40px !important;
+  letter-spacing: -0.5px !important;
+  font-family: 'Playfair Display', serif !important;
+  line-height: 1.2 !important;
+}
 
 /* Video Section Adjustments for its new position */
 .welcome-jue .video-section {
@@ -426,9 +431,21 @@ h3 {
 .welcome-jue .video-container {
   max-width: 1000px;
   margin: 0 auto;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-  background: #000; /* Video black fallback */
-  border: 4px solid rgba(255, 255, 255, 0.1); /* Subtle border to define container on navy */
+  aspect-ratio: 16 / 9;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-jue .video-container iframe {
+  display: block;
+  border: none;
+  width: 100%;
+  height: 100%;
+  transform: scale(1.02); /* Slight scale to hide edge artifacts from the YouTube player */
+  margin-top: -1px; /* Nudges it up to cover any gap */
 }
 
 
@@ -532,7 +549,7 @@ h3 {
   }
 
   .hero-headline {
-    font-size: 2.2rem;
+    font-size: 1.9rem; /* Slightly reduced from 2.2rem */
     line-height: 1.3;
     color: #E1F5FE;
   }
@@ -602,16 +619,30 @@ h3 {
 
   /* Welcome JUE Mobile Overrides */
   .welcome-jue {
-    padding: 80px 10px !important; /* increased space */
-    text-align: center !important;
+    padding: 80px 10px !important;
+    background: #e9ecef !important;
   }
 
   .welcome-jue-title {
-    font-size: 4.2rem !important; /* Even bigger as requested */
-    line-height: 1.3 !important; /* Increased to prevent "close close" lines */
-    letter-spacing: 1px !important; /* Added character breathing room */
+    color: var(--primary-color, #003B6F) !important;
+    font-size: clamp(0.5rem, 4.2vw, 1.8rem) !important; /* Aggressive reduction to ensure one line for the main name */
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 700 !important;
+    white-space: normal !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.6px !important; /* Tighter tracking to save width */
     margin-bottom: 40px !important;
     padding: 0 5px !important;
+  }
+
+  .mobile-only {
+    display: block !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none !important;
   }
 }
 
@@ -2465,19 +2496,7 @@ h3 {
     border-bottom-right-radius: 0 !important;
   }
 
-  .welcome-jue-title {
-    font-size: clamp(0.4rem, 4.3vw, 1.3rem) !important;
-    white-space: nowrap !important;
-    text-align: left !important;
-    display: block !important;
-    width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
 
-  .welcome-jue {
-    padding: 15px 10px 30px !important;
-  }
 }
 
 /* NEW Main Navigation Header */
