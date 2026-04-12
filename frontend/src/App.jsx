@@ -506,16 +506,16 @@ const JourneySection = ({ isActive }) => {
 
 const statsSets = [
   [
-    { title: "Top Ranked University", label: "ENROLLMENT", value: "5,700+" },
-    { title: "Safe and Welcoming Campus", label: "GLOBAL DIVERSITY", value: "46.6%" },
-    { title: "Affordable Tuition fee & Scholarship", label: "CAREER SUCCESS", value: "96.3%" },
-    { title: "Global Career Opportunities", label: "Students from", value: "20+ Countries" }
+    { title: "Top Ranked University", value: "Study in Japan's Top Cities: Tokyo, Kobe or Fukuoka" },
+    { title: "Ranked 2nd in Japan", value: "3,000+ Students from over 20 Countries" },
+    { title: "English Friendly Classes", value: "Japanese Language Support Included in Programs" },
+    { title: "50+ Years of Excellence", value: "Trusted University for Global Careers" }
   ],
   [
-    { title: "World-Class Faculties", label: "EXPERT PROFESSORS", value: "300+" },
-    { title: "Modern Infrastructure", label: "HIGH-TECH LABS", value: "50+" },
-    { title: "Guaranteed Placement", label: "ALUMNI NETWORK", value: "20,000+" },
-    { title: "Beautiful Surroundings", label: "CAMPUS AREA", value: "100+ Acres" }
+    { title: "World-Class Faculty", value: "EXPERIENCED PROFESSORS: Industry & Academic Experts" },
+    { title: "Safe & Inclusive Campus", value: "GLOBAL STUDENT COMMUNITY: 20+ Countries" },
+    { title: "Affordable Fee & Scholarship", value: "Special Grants & Support for Indian Students" },
+    { title: "Global Alumni Network", value: "ALUMNI CONNECTIONS: Worldwide Community" }
   ]
 ];
 
@@ -553,8 +553,11 @@ const App = () => {
   
   const [statSetIndex, setStatSetIndex] = useState(0);
   const [statAnim, setStatAnim] = useState('active');
+  const [isStatsPaused, setIsStatsPaused] = useState(false);
 
   useEffect(() => {
+    if (isStatsPaused) return;
+
     const statsTimer = setInterval(() => {
       setStatAnim('slide-out');
       setTimeout(() => {
@@ -562,12 +565,12 @@ const App = () => {
         setStatAnim('slide-in');
         setTimeout(() => {
           setStatAnim('active');
-        }, 100); // Wait brief moment, then slide to active
-      }, 500); // 500ms slide out duration
-    }, 4500); // cycle every 4.5 seconds
+        }, 100); 
+      }, 500); 
+    }, 4000); // 4 seconds interval
 
     return () => clearInterval(statsTimer);
-  }, []);
+  }, [isStatsPaused]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -667,7 +670,13 @@ const App = () => {
       </section>
 
       {/* Navy Stats Section [NEW] */}
-      <section className="navy-stats reveal">
+      <section 
+        className="navy-stats reveal"
+        onMouseEnter={() => setIsStatsPaused(true)}
+        onMouseLeave={() => setIsStatsPaused(false)}
+        onTouchStart={() => setIsStatsPaused(true)}
+        onTouchEnd={() => setIsStatsPaused(false)}
+      >
         <div className="stats-grid">
           {statsSets[statSetIndex].map((stat, index) => (
             <div className="stats-block" key={index}>
@@ -675,7 +684,7 @@ const App = () => {
                 <div className={`stats-slider-wrapper ${statAnim}`}>
                   <h3 className="block-title">{stat.title}</h3>
                   <div className="stat-detail">
-                    <span className="stat-label">{stat.label}</span>
+                    
                     <span className="stat-value">{stat.value}</span>
                   </div>
                 </div>
@@ -687,7 +696,7 @@ const App = () => {
 
       {/* Welcome JUE Section [NEW] */}
       <section className="welcome-jue reveal">
-        <h2 className="welcome-jue-title">Welcome to Japan University of Economics (JUE)</h2>
+        <h2 className="welcome-jue-title">Welcome to Japan University of Economics</h2>
         <div className="video-section">
           <div className="video-container">
             <iframe
