@@ -317,11 +317,11 @@ const HighlightCarousel = () => {
 const heroSliderImages = [
   '/images/football_play.jpeg',
   '/images/hero.png',
-  '/images/graduate00.jpg',
+  // '/images/graduate00.jpg',
   '/images/LearningProgression01.jpg',
-  '/images/support04.jpg',
-  '/images/Undergraduate00.jpg',
-  '/images/why-jue.jpg'
+  // '/images/support04.jpg',
+  // '/images/Undergraduate00.jpg',
+  // '/images/why-jue.jpg'
 ];
 
 const heroSubtitles = [
@@ -711,7 +711,12 @@ const App = () => {
              <div 
                key={idx}
                className={`program-card ${selectedProgram === prog ? 'active-card' : ''}`}
-               onClick={() => setSelectedProgram(prog)}
+               onClick={() => {
+                 setSelectedProgram(prog);
+                 setTimeout(() => {
+                   document.getElementById('programs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                 }, 100);
+               }}
              >
                <div className="program-image-box">
                  <img src={programImages[prog]} alt={prog} />
@@ -725,7 +730,7 @@ const App = () => {
       </section>
 
       {/* About Selected Program Section [REFINED NAVY BOX STYLE] */}
-      <section className="about-program-section reveal active" style={{ padding: '40px 20px' }}>
+      <section className="about-program-section reveal active" id="program-details" style={{ padding: '40px 20px' }}>
         <div className="about-program-container">
           <div className="program-detail-box">
              <h2 className="about-program-title">About {selectedProgram}</h2>
