@@ -686,8 +686,8 @@ const App = () => {
               Choose<br />
               <span 
                 className={`hero-japan-accent ${isJapanHovered ? 'is-hovered' : ''}`}
-                onMouseEnter={() => setIsJapanHovered(true)}
-                onMouseLeave={() => setIsJapanHovered(false)}
+                onPointerEnter={() => setIsJapanHovered(true)}
+                onPointerLeave={() => setIsJapanHovered(false)}
               >
                 Japan
               </span>

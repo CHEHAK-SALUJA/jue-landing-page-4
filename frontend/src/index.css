@@ -618,10 +618,20 @@ h3 {
     text-transform: uppercase;
   }
 
-  /* Welcome JUE Mobile Overrides */
   .welcome-jue {
     padding: 80px 10px !important;
     background: #e9ecef !important;
+  }
+
+  /* Disable Japan Hover for Mobile */
+  .hero-japan-accent,
+  .hero-japan-accent:hover,
+  .hero-japan-accent:active,
+  .hero-japan-accent:focus,
+  .hero-japan-accent.is-hovered {
+    transform: none !important;
+    filter: drop-shadow(0 0 8px rgba(240, 196, 0, 0.3)) !important; /* Keep base glow, remove hover glow */
+    cursor: default !important;
   }
 
   .welcome-jue-title {
