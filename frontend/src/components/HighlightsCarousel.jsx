@@ -1,33 +1,33 @@
 import { useRef, useEffect } from 'react';
 
-import news1 from '../assets/ai_images/news_1.png';
-import news2 from '../assets/ai_images/news_2.png';
-import news3 from '../assets/ai_images/news_3.png';
-import news4 from '../assets/ai_images/news_4.png';
-import news5 from '../assets/ai_images/news_5.png';
-import news6 from '../assets/ai_images/news_6.png';
+import highlight1 from '../assets/ai_images/highlight_1.png';
+import highlight2 from '../assets/ai_images/highlight_2.png';
+import highlight3 from '../assets/ai_images/highlight_3.png';
+import highlight4 from '../assets/ai_images/highlight_4.png';
+import highlight5 from '../assets/ai_images/highlight_5.png';
+import highlight6 from '../assets/ai_images/highlight_6.png';
 
-const defaultNews = [
-  { img: news1, date: '2026.04.15', text: 'Our university has received the "2026 Prime Minister\'s Commendation for Distinguished Service in the Promotion of Greenery."' },
-  { img: news2, date: '2026.04.10', text: 'JUE Students Win National Research Award for Digital Transformation in modern Economics Education.' },
-  { img: news3, date: '2026.04.05', text: 'JUE Announces New Academic Partnership with Top Indian Institutions for Global Exchange Programs.' },
-  { img: news4, date: '2026.03.28', text: 'Record number of students graduate at the Spring 2026 Convocation Ceremony held at Tokyo Campus.' },
-  { img: news5, date: '2026.03.20', text: 'International Exchange Program welcomes 120 students from 18 nations for the Spring Semester 2026.' },
-  { img: news6, date: '2026.03.15', text: 'Distinguished Professor Yamamoto delivers keynote at Global Economics Forum attended by 500+ students.' },
+const defaultHighlights = [
+  { img: highlight1, date: '2026.04.10', text: 'Innovative Robotics Lab: Leading the Future of Japanese Engineering.' },
+  { img: highlight2, date: '2026.04.10', text: 'Vibrant Campus Life: Discovering the Hearts and Minds of Global Students.' },
+  { img: highlight3, date: '2026.04.10', text: 'Prime Minister\'s Commendation for Distinguished Service in Greenery Promotion.' },
+  { img: highlight4, date: '2026.04.10', text: 'Academic Excellence: Students collaborating in our modern, bright library space.' },
+  { img: highlight5, date: '2026.04.10', text: 'Cultural Inclusion: International food festival celebrating our diverse student body.' },
+  { img: highlight6, date: '2026.04.10', text: 'Career Success: Students connecting with top global recruiters at our annual fair.' },
 ];
 
-export default function NewsCarousel({ title = 'News & Press Release', items = defaultNews }) {
+export default function HighlightsCarousel({ title = 'Highlights', items = defaultHighlights }) {
   const trackRef = useRef(null);
   const touchStartX = useRef(null);
   const isTeleporting = useRef(false);
 
-  // Triple the items to create an infinite scroll illusion
+  // Triple items for infinite loop effect
   const infiniteItems = [...items, ...items, ...items];
 
   useEffect(() => {
     const track = trackRef.current;
     if (track) {
-      // Start in the middle set of items
+      // Start in middle
       const setWidth = track.scrollWidth / 3;
       track.scrollLeft = setWidth;
     }
@@ -39,15 +39,11 @@ export default function NewsCarousel({ title = 'News & Press Release', items = d
     if (!track) return;
 
     const setWidth = track.scrollWidth / 3;
-    
-    // If we've scrolled into the first set, teleport to the second set
     if (track.scrollLeft < setWidth * 0.5) {
       isTeleporting.current = true;
       track.scrollLeft += setWidth;
       setTimeout(() => { isTeleporting.current = false; }, 50);
-    } 
-    // If we've scrolled into the third set, teleport back to the second set
-    else if (track.scrollLeft > setWidth * 1.5) {
+    } else if (track.scrollLeft > setWidth * 1.5) {
       isTeleporting.current = true;
       track.scrollLeft -= setWidth;
       setTimeout(() => { isTeleporting.current = false; }, 50);
@@ -73,7 +69,6 @@ export default function NewsCarousel({ title = 'News & Press Release', items = d
   return (
     <div className="news-carousel-wrapper">
       <h2 className="news-title">{title}</h2>
-
       <div
         ref={trackRef}
         className="news-snap-track"
@@ -84,7 +79,7 @@ export default function NewsCarousel({ title = 'News & Press Release', items = d
         {infiniteItems.map((item, i) => (
           <div className="news-snap-card news-card" key={i}>
             <div className="news-card__image">
-              <img src={item.img} alt={`card ${i + 1}`} draggable={false} />
+              <img src={item.img} alt={`highlight ${i + 1}`} draggable={false} />
             </div>
             <div className="news-card__body">
               <p className="news-card__date">{item.date}</p>
