@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import ChatWidget from './components/ChatWidget';
 import NewsCarousel from './components/NewsCarousel';
+import HighlightsCarousel from './components/HighlightsCarousel';
 import './index.css';
 import namasteIcon from './assets/namaste.png';
 
@@ -433,7 +434,32 @@ const programImages = {
   "Health & Sports Management": "/images/jue-students.jpg"
 };
 
-const JourneySection = ({ isActive }) => {
+const JourneySection = () => {
+  const [isActive, setIsActive] = useState(false);
+  const sectionRef = useRef(null);
+  const animRef = useRef(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      // Strict trigger: must be intersecting and we must have scrolled past the initial fold
+      if (entry.isIntersecting && window.scrollY > 100) {
+        setIsActive(true);
+      }
+    }, { threshold: 0.5 }); 
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isActive && animRef.current && animRef.current.beginElement) {
+      animRef.current.beginElement();
+    }
+  }, [isActive]);
+
   // S-Curve Bezier Path
   const pathData = "M 20 85 C 80 85, 20 15, 80 15";
 
@@ -444,7 +470,7 @@ const JourneySection = ({ isActive }) => {
   };
 
   return (
-    <section className="journey-wrapper reveal" id="journey">
+    <section className="journey-wrapper reveal" id="journey" ref={sectionRef}>
       <div className="journey-header">
         <h2>Your Journey from India to Japan</h2>
       </div>
@@ -465,10 +491,23 @@ const JourneySection = ({ isActive }) => {
             vectorEffect="non-scaling-stroke"
           />
           {/* Fixed Horizontal SVG Airplane animating over exact path - Stopping at end & Bigger size */}
-          <image href="/images/airplane-removebg-preview.png" width="20" height="20" x="-10" y="-10" transform="rotate(30)">
-             {isActive && (
-               <animateMotion dur="12s" repeatCount="1" fill="freeze" path={pathData} />
-             )}
+          <image 
+            href="/images/airplane-removebg-preview.png" 
+            width="20" 
+            height="20" 
+            x="-10" 
+            y="-10" 
+            transform="rotate(30)"
+            style={{ opacity: isActive ? 1 : 0, transition: 'opacity 0.5s ease-in' }}
+          >
+             <animateMotion 
+               ref={animRef}
+               dur="12s" 
+               repeatCount="1" 
+               fill="freeze" 
+               path={pathData} 
+               begin="indefinite"
+             />
           </image>
         </svg>
 
@@ -491,7 +530,8 @@ const JourneySection = ({ isActive }) => {
                 <div 
                   className={`step-text-container ${step.align} ${isActive ? 'fade-in-on-pass' : ''}`}
                   style={{ 
-                    animationDelay: `${step.t * 10}s`
+                    animationDelay: `${step.t * 12}s`, // Adjusted to match 12s airplane duration
+                    opacity: 0 // Start hidden
                   }}
                 >
                   <div className="step-title" style={{ color: dotColor }}>{step.title}</div>
@@ -525,7 +565,6 @@ const App = () => {
   const [selectedProgram, setSelectedProgram] = useState("Department of Economics");
   const [showStories, setShowStories] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
-  const [isJourneyActive, setIsJourneyActive] = useState(false);
   const [selectedSupport, setSelectedSupport] = useState("visa");
   const [activeSupportSlide, setActiveSupportSlide] = useState(0);
   const [slideAnim, setSlideAnim] = useState('active');
@@ -581,19 +620,21 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-          if (entry.target.id === 'journey') {
-            setIsJourneyActive(true);
+    // Small delay to ensure layout is stable before observing
+    const timer = setTimeout(() => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
           }
-        }
-      });
-    }, { threshold: 0.2 });
+        });
+      }, { threshold: 0.1 }); // More responsive for general reveals
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    return () => observer.disconnect();
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      return () => observer.disconnect();
+    }, 500); // 500ms delay to ensure page is settled
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -641,7 +682,7 @@ const App = () => {
             <p className="hero-eyebrow">Thinking of<br />studying abroad?</p>
             <h1 className="hero-headline">
               Then Why Not<br />
-              Choose <span className="hero-gold">Japan</span>
+              Choose <span className="hero-japan-accent">Japan</span>
             </h1>
           </div>
 
@@ -723,11 +764,7 @@ const App = () => {
       {/* Highlights — Swipe Carousel */}
       <section className="highlights-jue-section reveal">
         <div className="section-container">
-          <NewsCarousel title="Highlights" items={[
-            { img: new URL('./assets/ai_images/highlight_1.png', import.meta.url).href, date: '2026.04.10', text: 'Innovative Robotics Lab: Equipping students with future-ready tech skills at JUE.' },
-            { img: new URL('./assets/ai_images/highlight_2.png', import.meta.url).href, date: '2026.04.10', text: 'Vibrant Campus Life: A global community fostering worldwide connections every day.' },
-            { img: new URL('./assets/ai_images/highlight_3.png', import.meta.url).href, date: '2026.04.10', text: 'Prime Minister\'s Commendation for Distinguished Service in Greenery Promotion 2026.' },
-          ]} />
+          <HighlightsCarousel title="Highlights" />
         </div>
       </section>
 
@@ -771,7 +808,7 @@ const App = () => {
       </section>
 
       {/* New Journey Section Implementation */}
-      <JourneySection isActive={isJourneyActive} />
+      <JourneySection />
 
       {/* Community Row Header [REFINED] */}
       <section className="community-cta reveal" style={{ position: 'relative', overflow: 'visible' }}>
