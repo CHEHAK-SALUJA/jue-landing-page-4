@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import ChatWidget from './components/ChatWidget';
+import NewsCarousel from './components/NewsCarousel';
 import './index.css';
 import namasteIcon from './assets/namaste.png';
 
@@ -709,6 +710,24 @@ const App = () => {
               allowFullScreen
             ></iframe>
           </div>
+        </div>
+      </section>
+
+      {/* News & Press Release — Swipe Carousel */}
+      <section className="news-press-section reveal">
+        <div className="section-container">
+          <NewsCarousel title="News & Press Release" />
+        </div>
+      </section>
+
+      {/* Highlights — Swipe Carousel */}
+      <section className="highlights-jue-section reveal">
+        <div className="section-container">
+          <NewsCarousel title="Highlights" items={[
+            { img: new URL('./assets/ai_images/highlight_1.png', import.meta.url).href, date: '2026.04.10', text: 'Innovative Robotics Lab: Equipping students with future-ready tech skills at JUE.' },
+            { img: new URL('./assets/ai_images/highlight_2.png', import.meta.url).href, date: '2026.04.10', text: 'Vibrant Campus Life: A global community fostering worldwide connections every day.' },
+            { img: new URL('./assets/ai_images/highlight_3.png', import.meta.url).href, date: '2026.04.10', text: 'Prime Minister\'s Commendation for Distinguished Service in Greenery Promotion 2026.' },
+          ]} />
         </div>
       </section>
 
