@@ -568,6 +568,7 @@ const App = () => {
   const [selectedSupport, setSelectedSupport] = useState("visa");
   const [activeSupportSlide, setActiveSupportSlide] = useState(0);
   const [slideAnim, setSlideAnim] = useState('active');
+  const [isJapanHovered, setIsJapanHovered] = useState(false);
 
   useEffect(() => {
     setActiveSupportSlide(0);
@@ -683,7 +684,13 @@ const App = () => {
             <h2 className="hero-headline">
               Then Why Not<br />
               Choose<br />
-              <span className="hero-japan-accent">Japan</span>
+              <span 
+                className={`hero-japan-accent ${isJapanHovered ? 'is-hovered' : ''}`}
+                onMouseEnter={() => setIsJapanHovered(true)}
+                onMouseLeave={() => setIsJapanHovered(false)}
+              >
+                Japan
+              </span>
             </h2>
           </div>
 

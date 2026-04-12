@@ -200,7 +200,8 @@ h3 {
 
 .hero-japan-accent:hover,
 .hero-japan-accent:active,
-.hero-japan-accent:focus {
+.hero-japan-accent:focus,
+.hero-japan-accent.is-hovered {
   transform: scale(1.1) rotate(-2deg);
   filter: drop-shadow(0 0 15px rgba(240, 196, 0, 0.5));
 }
