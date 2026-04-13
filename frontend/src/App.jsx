@@ -4,6 +4,14 @@ import NewsCarousel from './components/NewsCarousel';
 import HighlightsCarousel from './components/HighlightsCarousel';
 import './index.css';
 import namasteIcon from './assets/namaste.png';
+import japan1 from './assets/ai_images_why_japan/japan_1.png';
+import japan2 from './assets/ai_images_why_japan/japan_2.png';
+import japan3 from './assets/ai_images_why_japan/japan_3.png';
+import japan4 from './assets/ai_images_why_japan/japan_4.png';
+import japan5 from './assets/ai_images_why_japan/japan_5.png';
+import japan6 from './assets/ai_images_why_japan/japan_6.png';
+import japan7 from './assets/ai_images_why_japan/japan_7.png';
+import japan8 from './assets/ai_images_why_japan/japan_8.png';
 
 const Counter = ({ target, duration = 800, suffix = "" }) => {
   const [count, setCount] = useState(0);
@@ -434,6 +442,106 @@ const programImages = {
   "Health & Sports Management": "/images/jue-students.jpg"
 };
 
+const JapanChoiceCarousel = () => {
+  const images = [
+    { title: "World-Class Safety", img: japan1 },
+    { title: "Stunning Natural Seasons", img: japan2 },
+    { title: "Cutting-Edge Technology", img: japan3 },
+    { title: "Traditional Culture", img: japan4 },
+    { title: "Authentic Culinary Delights", img: japan5 },
+    { title: "24/7 Convenience", img: japan6 },
+    { title: "Leading Education & Research", img: japan7 },
+    { title: "Vibrant City Life", img: japan8 },
+  ];
+
+  const [idx, setIdx] = React.useState(0);
+  const touchStartX = React.useRef(null);
+
+  const prevSlide = () => {
+    setIdx(prev => (prev - 1 + images.length) % images.length);
+  };
+
+  const nextSlide = () => {
+    setIdx(prev => (prev + 1) % images.length);
+  };
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    touchStartX.current = null;
+    if (Math.abs(diff) < 50) return;
+
+    if (diff > 0) nextSlide();
+    else prevSlide();
+  };
+
+  return (
+    <section 
+      className="japan-choice-section reveal"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      <h2 className="japan-choice-title">
+        <span className="light-blue">Why Choosing</span> <span className="navy-blue">JAPAN is the Right Choice</span>
+      </h2>
+      <div className="japan-carousel-container">
+        <div 
+          className="japan-carousel-track" 
+          style={{ 
+            transform: `translateX(calc(-${idx * 80}%))` 
+          }}
+        >
+          {images.map((item, i) => (
+            <div 
+              key={item.title} 
+              className={`japan-carousel-item ${i === idx ? 'curr' : (i < idx ? 'prev' : 'next')}`}
+            >
+              <div className="japan-img-box">
+                <img src={item.img} alt={item.title} />
+              </div>
+              <p className="japan-img-caption">{item.title}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const WhyChooseSection = () => {
+  const chooseItems = [
+    { title: "Affordable Tuition & Scholarships", img: "/images/why-parents.png" },
+    { title: "English-Friendly Programs", img: "/images/why-japan.jpg" },
+    { title: "Career & Internship Support", img: "/images/career-jue.jpg" },
+    { title: "Modern City Campuses", img: "/images/why-jue.jpg" },
+    { title: "Safe & Global Environment", img: "/images/jue-students.jpg" },
+    { title: "Housing & Work Assistance", img: "/images/accommodation-jue.jpg" },
+  ];
+
+  return (
+    <section className="why-choose-jue reveal">
+      <div className="why-choose-header">
+        <h2 className="why-choose-line1">Why Choose</h2>
+        <h2 className="why-choose-line2">Japan University of Economics(JUE)</h2>
+      </div>
+      <div className="why-choose-grid">
+        {chooseItems.map((item, idx) => (
+          <div key={idx} className="choose-card">
+            <div className="choose-img-box">
+              <img src={item.img} alt={item.title} />
+            </div>
+            <p className="choose-caption">{item.title}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
 const JourneySection = () => {
   const [isActive, setIsActive] = useState(false);
   const sectionRef = useRef(null);
@@ -562,7 +670,7 @@ const statsSets = [
 
 const App = () => {
   const [heroIndex, setHeroIndex] = useState(0);
-  const [selectedProgram, setSelectedProgram] = useState("Department of Economics");
+  const [selectedProgram, setSelectedProgram] = useState(null);
   const [showStories, setShowStories] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const [selectedSupport, setSelectedSupport] = useState("visa");
@@ -779,41 +887,47 @@ const App = () => {
       {/* New Journey Section Implementation */}
       <JourneySection />
 
-       {/* Programs We Offer Section [NEW] */}
-      <section className="programs reveal" id="programs">
-        <h2 className="programs-title">PROGRAMS WE OFFER</h2>
-        <div className="programs-grid">
-          {Object.keys(programImages).map((prog, idx) => (
-             <div 
-               key={idx}
-               className={`program-card ${selectedProgram === prog ? 'active-card' : ''}`}
-               onClick={() => {
-                 setSelectedProgram(prog);
-                 setTimeout(() => {
-                   document.getElementById('programs').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                 }, 100);
-               }}
-             >
-               <div className="program-image-box">
-                 <img src={programImages[prog]} alt={prog} />
-               </div>
-               <div className="program-info-box">
-                 <h4>{prog}</h4>
-               </div>
-             </div>
-          ))}
-        </div>
-      </section>
+      {/* Why Choose JUE Section [NEW] */}
+      <WhyChooseSection />
 
-      {/* About Selected Program Section [REFINED NAVY BOX STYLE] */}
-      <section className="about-program-section reveal active" id="program-details" style={{ padding: '40px 20px' }}>
-        <div className="about-program-container">
-          <div className="program-detail-box">
-             <h2 className="about-program-title">About {selectedProgram}</h2>
-             <div className="about-program-underline"></div>
-             <p className="about-program-text">
-               {programDetails[selectedProgram]}
-             </p>
+      {/* Why Choosing Japan Carousel Section [NEW] */}
+      <JapanChoiceCarousel />
+
+      {/* Programs We Offer — Accordion Style [NEW] */}
+      <section className="programs-accordion-section reveal" id="programs">
+        <div className="accordion-wrapper">
+          {/* Main Title Strip */}
+          <div className="accordion-header-strip">
+            <h2 className="accordion-main-title">PROGRAMS WE OFFER</h2>
+          </div>
+
+          <div className="accordion-items">
+            {Object.keys(programDetails).map((prog) => (
+              <div 
+                key={prog} 
+                className={`accordion-item ${selectedProgram === prog ? 'expanded' : ''}`}
+              >
+                <div 
+                  className="accordion-stripe" 
+                  onClick={() => setSelectedProgram(selectedProgram === prog ? null : prog)}
+                >
+                  <span className="stripe-title">{prog}</span>
+                  <span className="stripe-icon">{selectedProgram === prog ? '−' : '+'}</span>
+                </div>
+                
+                <div className="accordion-content">
+                  <div className="content-inner">
+                    <p className="program-desc">{programDetails[prog]}</p>
+                    <button 
+                      className="learn-more-btn"
+                      onClick={() => window.open('#', '_blank')}
+                    >
+                      Learn More
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
