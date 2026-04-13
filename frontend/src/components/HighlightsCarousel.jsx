@@ -67,29 +67,76 @@ export default function HighlightsCarousel({ title = 'Highlights', items = defau
     track.scrollBy({ left: diff > 0 ? cardWidth : -cardWidth, behavior: 'smooth' });
   };
 
+  const [isSliding, setIsSliding] = useState(false);
+  const [slideDirection, setSlideDirection] = useState('');
+  const touchStartY = useRef(null);
+
   const handleSwap = (clickedIdx) => {
-    setActiveIndex(clickedIdx);
+    if (isSliding || clickedIdx === activeIndex) return;
+    
+    setSlideDirection('down');
+    setIsSliding(true);
+    
+    setTimeout(() => {
+      setActiveIndex(clickedIdx);
+    }, 200); // Update content at midpoint of animation
+    
+    setTimeout(() => {
+      setIsSliding(false);
+    }, 400); 
   };
 
-  // Get next 3 for sidebar
-  const getSidebarItems = () => {
-    const list = [];
-    for (let i = 1; i <= 3; i++) {
-       const idx = (activeIndex + i) % items.length;
-       list.push({ ...items[idx], originalIndex: idx });
+  const onMobileTouchStart = (e) => {
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const onMobileTouchEnd = (e) => {
+    if (touchStartY.current === null) return;
+    const diff = touchStartY.current - e.changedTouches[0].clientY;
+    touchStartY.current = null;
+    if (Math.abs(diff) < 50) return;
+
+    if (diff > 0) {
+      // Swipe up -> Next
+      const nextIdx = (activeIndex + 1) % items.length;
+      handleSwap(nextIdx);
+    } else {
+      // Swipe down -> Prev
+      const prevIdx = (activeIndex - 1 + items.length) % items.length;
+      handleSwap(prevIdx);
     }
-    return list;
   };
 
-  const sidebarItems = getSidebarItems();
+  // Items for sidebar (the next 3 after activeIndex, or wrap around)
+  const sidebarItems = [
+    { ...items[(activeIndex - 1 + items.length) % items.length], action: 'prev' },
+    { ...items[(activeIndex + 2) % items.length], action: 'swap', index: (activeIndex + 2) % items.length },
+    { ...items[(activeIndex + 1) % items.length], action: 'next' }
+  ];
+
+  const handleAction = (item) => {
+    if (item.action === 'prev') {
+      const prevIdx = (activeIndex - 1 + items.length) % items.length;
+      handleSwap(prevIdx);
+    } else if (item.action === 'next') {
+      const nextIdx = (activeIndex + 1) % items.length;
+      handleSwap(nextIdx);
+    } else {
+      handleSwap(item.index);
+    }
+  };
 
   return (
     <div className="news-carousel-wrapper">
       <h2 className="news-title">{title}</h2>
 
       {/* Mobile Swap Layout [NEW] */}
-      <div className="news-mobile-split">
-         <div className="news-main-card news-card">
+      <div 
+        className="news-mobile-split"
+        onTouchStart={onMobileTouchStart}
+        onTouchEnd={onMobileTouchEnd}
+      >
+         <div className={`news-main-card news-card ${isSliding ? `sliding-${slideDirection}` : ''}`}>
             <div className="news-card__image main-img">
               <img src={items[activeIndex].img} alt="Main highlight" />
             </div>
@@ -99,21 +146,23 @@ export default function HighlightsCarousel({ title = 'Highlights', items = defau
             </div>
          </div>
          <div className="news-sidebar">
-            {sidebarItems.map((item, idx) => (
-              <div 
-                className="news-side-card news-card" 
-                key={idx}
-                onClick={() => handleSwap(item.originalIndex)}
-              >
-                <div className="news-card__image-mini">
-                   <img src={item.img} alt="Side highlight" />
+            <div className="news-sidebar-track">
+              {sidebarItems.map((item, idx) => (
+                <div 
+                  className="news-side-card news-card" 
+                  key={idx}
+                  onClick={() => handleAction(item)}
+                >
+                  <div className="news-card__image-mini">
+                     <img src={item.img} alt="Side highlight" />
+                  </div>
+                  <div className="news-card__body-mini">
+                     <p className="news-card__date-mini">{item.date}</p>
+                     <p className="news-card__text-mini">{item.text}</p>
+                  </div>
                 </div>
-                <div className="news-card__body-mini">
-                   <p className="news-card__date-mini">{item.date}</p>
-                   <p className="news-card__text-mini">{item.text}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
          </div>
       </div>
 
