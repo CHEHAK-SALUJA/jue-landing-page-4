@@ -1008,11 +1008,18 @@ const App = () => {
                       <div className="about-program-slider sub-carousel-container">
                         <div className="support-detail-layout">
                           <div className="image-carousel-unit">
-                            <button className="sub-arrow left" onClick={prevSupportSlide}>‹</button>
-                            <div className={`about-program-image sub-image ${slideAnim}`}>
-                              <img src={supportSlides[selectedSupport][activeSupportSlide].img} alt="Support" />
+                            <div className="sub-arrow-container">
+                              <button className="sub-arrow left" onClick={prevSupportSlide}>‹</button>
+                              <div className={`about-program-image sub-image ${slideAnim}`}>
+                                <img src={supportSlides[selectedSupport][activeSupportSlide].img} alt="Support" />
+                              </div>
+                              <button className="sub-arrow right" onClick={nextSupportSlide}>›</button>
                             </div>
-                            <button className="sub-arrow right" onClick={nextSupportSlide}>›</button>
+                            <div className="slide-dots-image-align">
+                               {supportSlides[selectedSupport].map((_, i) => (
+                                 <span key={i} className={`slide-dot ${i === activeSupportSlide ? 'active' : ''}`}></span>
+                               ))}
+                            </div>
                           </div>
                           
                           <div className={`about-program-info sub-info ${slideAnim}`}>
@@ -1021,11 +1028,6 @@ const App = () => {
                             <p className="about-program-text">
                               {supportSlides[selectedSupport][activeSupportSlide].text}
                             </p>
-                            <div className="slide-dots">
-                               {supportSlides[selectedSupport].map((_, i) => (
-                                 <span key={i} className={`slide-dot ${i === activeSupportSlide ? 'active' : ''}`}></span>
-                               ))}
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -1087,8 +1089,8 @@ const App = () => {
                  <img src="/images/jue-students.jpg" alt="Student Presentation" />
               </div>
               <div className="success-pill">
-                <strong>Kim Seong-min (South Korea) - Professional Athlete</strong><br />
-                "JUE's disciplined environment at the Fukuoka campus was essential in preparing me for the rigors of the Kiwoom Heroes and my journey into professional sports."
+                <strong>Kim Seong-min (Athlete)</strong><br />
+                "JUE's disciplined campus prepared me perfectly for my professional career in sports."
               </div>
             </div>
 
@@ -1097,8 +1099,8 @@ const App = () => {
                  <img src="/images/Undergraduate00.jpg" alt="Student Life" />
               </div>
               <div className="success-pill">
-                <strong>Garkavenko Hanna (Ukraine) - Japanese Industry</strong><br />
-                "The dedicated career support programs at JUE offered me a lifeline. I am proud to have secured a career here in Japan thanks to their guidance."
+                <strong>Garkavenko Hanna (Industry)</strong><br />
+                "JUE's career support gave me the tools to secure a rewarding career in Japan's industry."
               </div>
             </div>
 
@@ -1107,8 +1109,8 @@ const App = () => {
                  <img src="/images/fukuokacampus02.jpg" alt="Alumni Founder" />
               </div>
               <div className="success-pill">
-                <strong>Kang Rae-soo (South Korea) - CEO & Founder</strong><br />
-                "Founding QuickConnect Co., Ltd. was possible because of the market insights and networking opportunities JUE provided during my Economics degree."
+                <strong>Kang Rae-soo (CEO)</strong><br />
+                "The market insights I gained at JUE were the foundation for founding my own company."
               </div>
             </div>
           </>
@@ -1148,6 +1150,8 @@ const App = () => {
           </div>
         </div>
       </section>
+
+      <div className="thick-section-divider"></div>
 
       {/* Apply Now CTA */}
       <section className="apply-cta reveal">
