@@ -3027,27 +3027,26 @@ h3 {
 /* Programs Accordion Section [NEW] */
 .programs-accordion-section {
   background: #003B6F; /* Full navy background for the section */
-  padding: 60px 0;
+  padding: 0; /* Zeroed out to save max vertical space */
   width: 100%;
 }
 
 .accordion-wrapper {
   max-width: 900px;
   margin: 0 auto;
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  /* Removed top/bottom borders as they looked like useless strips */
 }
 
 .accordion-header-strip {
-  padding: 25px 30px;
+  padding: 10px 10px; /* Far left for the main heading */
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .accordion-main-title {
   color: #3498db; /* Match existing light blue highlights */
-  font-size: 1.8rem;
+  font-size: 1.4rem; /* Smaller more compact title */
   font-weight: 800;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   margin: 0;
   font-family: 'Playfair Display', serif;
 }
@@ -3061,7 +3060,7 @@ h3 {
 }
 
 .accordion-stripe {
-  padding: 20px 30px;
+  padding: 8px 10px 8px 35px; /* Indented from the left (35px) */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -3099,14 +3098,14 @@ h3 {
 }
 
 .content-inner {
-  padding: 30px;
+  padding: 20px; /* Reduced from 30px */
   color: #e0e0e0;
 }
 
 .program-desc {
   font-size: 1.05rem;
-  line-height: 1.8;
-  margin-bottom: 25px;
+  line-height: 1.5; /* Tighter line height */
+  margin-bottom: 15px;
 }
 
 .learn-more-btn {
@@ -3128,19 +3127,34 @@ h3 {
 
 @media (max-width: 768px) {
   .programs-accordion-section {
-    padding: 30px 0;
+    padding: 0; /* Zero vertical space */
+  }
+  .accordion-header-strip {
+    padding: 8px 10px; /* Aligned to the far left */
+  }
+  .japan-choice-title {
+    font-size: 1.15rem !important; 
+    text-align: left !important;
+    padding-left: 20px !important; /* Slightly less indentation as requested */
+    line-height: 1.2 !important;
+    margin-bottom: 25px !important;
   }
   .accordion-main-title {
-    font-size: 1.1rem !important; /* Standardize with other headers */
+    font-size: 1.0rem !important; /* Extremely compact */
+    text-align: left !important;
+  }
+  .accordion-stripe {
+    padding: 8px 10px 8px 30px; /* Indented on mobile too */
   }
   .stripe-title {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
   .content-inner {
-    padding: 20px;
+    padding: 12px 12px 12px 30px; /* Match indent for the description */
   }
   .program-desc {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
   }
 }
 
@@ -3448,7 +3462,7 @@ h3 {
 /* Why Choose JUE Section */
 .why-choose-jue {
   padding: 60px 20px;
-  background: #ffffff;
+  background: #f3f3f3;
   text-align: left; /* Changed from center */
 }
 
@@ -3609,6 +3623,15 @@ h3 {
   font-size: 1.2rem;
 }
 
+.japan-img-desc {
+  font-size: 0.85rem;
+  color: #666;
+  text-align: center;
+  max-width: 90%;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
 @media (max-width: 768px) {
   /* Standardized Header Sizes */
   .welcome-title,
@@ -3633,6 +3656,16 @@ h3 {
   .japan-img-box {
     height: 180px;
     border-radius: 8px;
+  }
+  .japan-img-caption {
+    margin-top: 12px;
+    font-size: 1rem;
+  }
+  .japan-img-desc {
+    font-size: 0.68rem;
+    line-height: 1.3;
+    margin-top: 5px;
+    color: #777;
   }
 }
 

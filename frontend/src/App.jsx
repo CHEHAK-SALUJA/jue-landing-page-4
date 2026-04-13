@@ -444,14 +444,46 @@ const programImages = {
 
 const JapanChoiceCarousel = () => {
   const images = [
-    { title: "World-Class Safety", img: japan1 },
-    { title: "Stunning Natural Seasons", img: japan2 },
-    { title: "Cutting-Edge Technology", img: japan3 },
-    { title: "Traditional Culture", img: japan4 },
-    { title: "Authentic Culinary Delights", img: japan5 },
-    { title: "24/7 Convenience", img: japan6 },
-    { title: "Leading Education & Research", img: japan7 },
-    { title: "Vibrant City Life", img: japan8 },
+    { 
+      title: "World-Class Safety", 
+      desc: "Experience one of the safest countries globally, where you can move freely with peace of mind. Japan's low crime rate and secure environment make it perfect for international students.",
+      img: japan1 
+    },
+    { 
+      title: "Stunning Natural Seasons", 
+      desc: "From cherry blossoms in spring to golden leaves in autumn, Japan's four distinct seasons offer breathtaking views and a unique connection to nature throughout the year.",
+      img: japan2 
+    },
+    { 
+      title: "Cutting-Edge Technology", 
+      desc: "Be at the forefront of global innovation. Study in a nation that leads the world in robotics and high-speed transportation systems like the Shinkansen.",
+      img: japan3 
+    },
+    { 
+      title: "Traditional Culture", 
+      desc: "Discover a harmonious blend of the old and new. Explore ancient shrines and participate in traditional ceremonies in a culture that deeply respects its rich history.",
+      img: japan4 
+    },
+    { 
+      title: "Authentic Culinary Delights", 
+      desc: "Enjoy a world-renowned food culture. From high-end sushi to affordable local ramen, Japan's cuisine is as diverse and high-quality as its education system.",
+      img: japan5 
+    },
+    { 
+      title: "24/7 Convenience", 
+      desc: "Life made easy with convenience stores on every corner and efficient services. Everything you need is accessible anytime, letting you focus on your studies.",
+      img: japan6 
+    },
+    { 
+      title: "Leading Education & Research", 
+      desc: "Enroll in world-class institutions known for academic rigour. JUE provides the tools and network needed to excel in the global and domestic market.",
+      img: japan7 
+    },
+    { 
+      title: "Vibrant City Life", 
+      desc: "Live in dynamic urban centers like Tokyo or Fukuoka. Enjoy endless entertainment, shopping, and networking opportunities in some of the world's most modern cities.",
+      img: japan8 
+    },
   ];
 
   const [idx, setIdx] = React.useState(0);
@@ -486,7 +518,7 @@ const JapanChoiceCarousel = () => {
       onTouchEnd={handleTouchEnd}
     >
       <h2 className="japan-choice-title">
-        <span className="light-blue">Why Choosing</span> <span className="navy-blue">JAPAN is the Right Choice</span>
+        <span className="light-blue">Why Choosing</span> <br className="mobile-only" /> <span className="navy-blue">JAPAN is the Right Choice</span>
       </h2>
       <div className="japan-carousel-container">
         <div 
@@ -504,6 +536,7 @@ const JapanChoiceCarousel = () => {
                 <img src={item.img} alt={item.title} />
               </div>
               <p className="japan-img-caption">{item.title}</p>
+              <p className="japan-img-desc">{item.desc}</p>
             </div>
           ))}
         </div>
