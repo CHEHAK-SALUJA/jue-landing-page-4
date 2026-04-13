@@ -524,7 +524,7 @@ const JapanChoiceCarousel = () => {
         <div 
           className="japan-carousel-track" 
           style={{ 
-            transform: `translateX(calc(-${idx * 80}%))` 
+            transform: `translateX(calc(-${idx * 90}%))` 
           }}
         >
           {images.map((item, i) => (

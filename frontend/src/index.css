@@ -2236,7 +2236,7 @@ h3 {
 
 @media (max-width: 768px) {
   .journey-wrapper {
-    padding: 30px 10px; /* Reduced vertical padding on mobile */
+    padding: 30px 10px 10px; /* Reduced bottom padding */
   }
   .journey-header h2 {
     font-size: 0.6rem; /* Even smaller for mobile as requested */
@@ -3130,14 +3130,14 @@ h3 {
     padding: 0; /* Zero vertical space */
   }
   .accordion-header-strip {
-    padding: 8px 10px; /* Aligned to the far left */
+    padding: 8px 12px; /* Standardized to 12px */
   }
   .japan-choice-title {
     font-size: 1.15rem !important; 
     text-align: left !important;
-    padding-left: 20px !important; /* Slightly less indentation as requested */
+    padding-left: 0 !important; /* Now handled by section padding */
     line-height: 1.2 !important;
-    margin-bottom: 25px !important;
+    margin-bottom: 12px !important;
   }
   .accordion-main-title {
     font-size: 1.0rem !important; /* Extremely compact */
@@ -3475,13 +3475,15 @@ h3 {
   font-size: 2.2rem;
   color: #3498db !important; /* Light blue */
   margin: 0;
+  line-height: 1.1; /* Tightened */
   font-family: 'Playfair Display', serif;
 }
 
 .why-choose-line2 {
   font-size: 1.8rem;
   color: #003B6F !important; /* Navy blue */
-  margin: 5px 0 0;
+  margin: 0; /* Removed 5px top margin */
+  line-height: 1.1; /* Tightened */
   font-family: 'Playfair Display', serif;
 }
 
@@ -3523,19 +3525,26 @@ h3 {
 
 @media (max-width: 768px) {
   .why-choose-jue {
-    padding: 20px 20px; /* Reduced top padding on mobile */
+    padding: 10px 12px 10px; /* Reduced bottom padding from 20px */
   }
   .why-choose-line1 {
     font-size: 1.2rem;
     white-space: nowrap;
+    margin-bottom: 0 !important;
+    line-height: 1.1 !important;
   }
   .why-choose-line2 {
     font-size: 1.1rem;
     white-space: nowrap;
+    margin-top: 0 !important;
+    line-height: 1.1 !important;
   }
   .why-choose-grid {
     grid-template-columns: repeat(2, 1fr); /* 2 columns for mobile as requested */
     gap: 15px;
+  }
+  .why-choose-header {
+    margin-bottom: 15px !important; /* Reduced from default */
   }
   .choose-caption {
     font-size: 0.8rem;
@@ -3577,11 +3586,11 @@ h3 {
   gap: 0;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   /* Start centered on the first item (idx 0) with 80% width */
-  margin-left: 10%; 
+  margin-left: 5%; 
 }
 
 .japan-carousel-item {
-  width: 80% !important; /* Larger focus as requested */
+  width: 90% !important; /* Maximized focus as requested */
   flex-shrink: 0;
   transition: all 0.6s ease;
   display: flex;
@@ -3592,19 +3601,20 @@ h3 {
 
 .japan-carousel-item.curr {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1.05); /* Pop out effect */
+  z-index: 2;
 }
 
 .japan-carousel-item.prev,
 .japan-carousel-item.next {
-  opacity: 0.4; /* Dimmer sides for more focus */
-  transform: scale(0.85);
-  filter: brightness(0.7);
+  opacity: 0.3; /* Even dimmer for more focus */
+  transform: scale(0.8);
+  filter: brightness(0.6);
 }
 
 .japan-img-box {
   width: 100%;
-  height: 300px; /* Taller for the bigger cards */
+  height: 350px; /* Increased from 300px for more height */
   overflow: hidden;
   border-radius: 12px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
@@ -3624,15 +3634,19 @@ h3 {
 }
 
 .japan-img-desc {
-  font-size: 0.85rem;
+  font-size: 0.75rem; /* Reduced from 0.85rem */
   color: #666;
-  text-align: center;
-  max-width: 90%;
+  text-align: justify; /* Left and Right Aligned */
+  max-width: 400px; /* Limit width to encourage 2-line look */
   margin-top: 10px;
   line-height: 1.5;
 }
 
 @media (max-width: 768px) {
+  .japan-choice-section {
+    padding: 10px 12px 20px; /* Reduced top padding from 20px */
+  }
+
   /* Standardized Header Sizes */
   .welcome-title,
   .news-title,
@@ -3644,17 +3658,14 @@ h3 {
     line-height: 1.3 !important;
   }
 
-  .japan-choice-section {
-    padding: 20px 0 40px;
-  }
   .japan-carousel-track {
-    margin-left: 10%; /* Keep centered on mobile */
+    margin-left: 5%; /* Keep centered on mobile with 90% width */
   }
   .japan-carousel-item {
-    width: 80% !important;
+    width: 90% !important;
   }
   .japan-img-box {
-    height: 180px;
+    height: 220px; /* Increased from 180px */
     border-radius: 8px;
   }
   .japan-img-caption {
@@ -3662,10 +3673,12 @@ h3 {
     font-size: 1rem;
   }
   .japan-img-desc {
-    font-size: 0.68rem;
+    font-size: 0.58rem; /* Ultra small for mobile */
     line-height: 1.3;
     margin-top: 5px;
     color: #777;
+    text-align: justify; /* Left and Right Aligned */
+    max-width: 100%;
   }
 }
 
