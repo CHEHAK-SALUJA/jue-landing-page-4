@@ -375,11 +375,10 @@ const faqsList = [
 const specialSupportSteps = [
   { id: "visa", title: "Support for Visa and Admission", img: "/images/visa-jue.png" },
   { id: "english", title: "English Friendly Programs", img: "/images/language-jue.jpg" },
-  { id: "cities", title: "Study in Japan's Top Cities", img: "/images/fukuokacampus02.jpg" },
   { id: "meals", title: "Indian Meals Available", img: "/images/cafe00.jpg" },
-  { id: "accommodation", title: "Comfortable Accommodation", img: "/images/accommodation-jue.jpg" },
+  { id: "cities", title: "Study in Japan's Top Cities", img: "/images/fukuokacampus02.jpg" },
   { id: "clubs", title: "Club And Activities", img: "/images/clubs03.jpg" },
-  { id: "safe", title: "Safe Environment", img: "/images/jue-students.jpg" }
+  { id: "accommodation", title: "Comfortable Accommodation", img: "/images/accommodation-jue.jpg" }
 ];
 
 const supportSlides = {
@@ -965,28 +964,27 @@ const App = () => {
         </div>
       </section>
 
-      {/* Community Row Header [REFINED] */}
-      <section className="community-cta reveal" style={{ position: 'relative', overflow: 'visible' }}>
-        <h2 className="community-home-text">
-          <span className="white-text">Your concerns</span> <span className="green-highlight">NOW SOLVED</span>
-          <span className="animated-emoji">🤔</span>
-        </h2>
-      </section>
-
-      {/* Why JUE / Why Japan Slider */}
-      <section className="reveal" id="features">
-        <FeatureSlider />
-      </section>
-
-      {/* Special Support for Indian Students Section [RELOCATED] */}
-      <section className="special-support-section reveal">
+      {/* Special Support for Indian Students Section [REDESIGNED] */}
+      <section className="special-support-section reveal" id="special-support">
         <h2 className="special-support-title">Special Support for Indian Students</h2>
         <div className="support-grid">
           {specialSupportSteps.map((step, idx) => (
             <div 
               key={idx} 
               className={`support-card ${selectedSupport === step.id ? 'active-card-support' : ''}`}
-              onClick={() => setSelectedSupport(step.id)}
+              onClick={(e) => {
+                setSelectedSupport(step.id);
+                // Scroll to the active detail box on mobile
+                const target = document.getElementById('support-detail-anchor');
+                if (target) {
+                  const offset = 80; // Margin for header
+                  const bodyRect = document.body.getBoundingClientRect().top;
+                  const elementRect = target.getBoundingClientRect().top;
+                  const elementPosition = elementRect - bodyRect;
+                  const offsetPosition = elementPosition - offset;
+                  window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                }
+              }}
             >
               <div className="support-img-box">
                 <img src={step.img} alt={step.title} />
@@ -998,6 +996,9 @@ const App = () => {
           ))}
         </div>
       </section>
+
+      {/* Detail Anchor for auto-scroll */}
+      <div id="support-detail-anchor"></div>
 
       {/* Special Support Detail Section [UPGRADED INTERACTIVE SUB-CAROUSEL] */}
       <section className="about-program-section reveal active" style={{ padding: '0 20px' }}>
@@ -1028,6 +1029,20 @@ const App = () => {
             </div>
           </div>
         </div>
+      </section>
+
+
+      {/* Community Row Header [REFINED - RELOCATED] */}
+      <section className="community-cta reveal" style={{ position: 'relative', overflow: 'visible' }}>
+        <h2 className="community-home-text">
+          <span className="white-text">Your concerns</span> <span className="green-highlight">NOW SOLVED</span>
+          <span className="animated-emoji"></span>
+        </h2>
+      </section>
+
+      {/* Why JUE / Why Japan Slider [RELOCATED BELOW HEADING] */}
+      <section className="reveal" id="features">
+        <FeatureSlider />
       </section>
 
 

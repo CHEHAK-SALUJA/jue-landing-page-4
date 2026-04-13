@@ -3228,26 +3228,117 @@ h3 {
   transform: scale(1.05);
 }
 
+/* =========================================
+   Redesigned Special Support Grid
+   ========================================= */
+.special-support-section {
+  padding: 60px 12px;
+  background: #fff;
+}
+
+.special-support-title {
+  color: #003B6F;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.support-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 20px; /* Reduced to allow boxes to significantly overlap next row */
+  max-width: 900px;
+  margin: 0 auto;
+  overflow: visible !important;
+}
+
+.support-card {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: visible !important;
+}
+
+/* Row-based z-index to ensure upper boxes overlap lower images */
+.support-card:nth-child(1), .support-card:nth-child(2) { z-index: 30; }
+.support-card:nth-child(3), .support-card:nth-child(4) { z-index: 20; }
+.support-card:nth-child(5), .support-card:nth-child(6) { z-index: 10; }
+
+.support-img-box {
+  width: 100%;
+  aspect-ratio: 4 / 3.2;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.support-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.support-info-box {
+  position: absolute;
+  bottom: -22px; /* Positioned exactly half-in, half-out based on 45px min-height */
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border: 2px solid #000;
+  width: 85%;
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  text-align: center;
+  z-index: 100; /* Extremely high z-index to stay on top of the next row */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.support-info-box p {
+  margin: 0 !important;
+  color: #003B6F;
+  font-weight: 800 !important;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  text-transform: capitalize;
+}
+
+.active-card-support .support-info-box {
+  background: #003B6F;
+  border-color: #003B6F;
+}
+
+.active-card-support .support-info-box p {
+  color: #fff;
+}
+
 @media (max-width: 768px) {
-  .whatsapp-cta-section {
-    padding: 15px 10px; /* Tight fit for mobile */
+  .special-support-section {
+    padding: 20px 12px 40px; /* Reduced from 30px/60px */
   }
-  .whatsapp-cta-banner {
-    flex-wrap: nowrap; /* Enforce single line */
-    gap: 8px;
-    justify-content: space-between;
+  .special-support-title {
+    font-size: 1.35rem !important; /* Slightly larger for presence */
+    margin-bottom: 20px;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
   }
-  .whatsapp-cta-text {
-    font-size: 0.88rem; /* Scaled down to fit one line */
-    text-align: left;
-    line-height: 1.2;
-    flex: 1;
-    white-space: nowrap;
+  .support-grid {
+    gap: 35px 8px; /* Increased from 4px to provide more vertical space between rows */
   }
-  .whatsapp-join-btn {
-    font-size: 0.65rem;
-    padding: 6px 15px;
-    border-width: 2px;
+  .support-info-box {
+    width: 92%;
+    min-height: 38px;
+    bottom: -19px; /* Half-in/half-out */
+    padding: 3px 5px;
+    border-width: 1.5px;
+    z-index: 100 !important;
+  }
+  .support-info-box p {
+    font-size: 0.62rem;
   }
 }
 
@@ -3260,42 +3351,18 @@ h3 {
   }
 }
 
+/* WhatsApp moved to block above media query */
+.whatsapp-cta-section {
+  padding: 40px 20px;
+}
+
 @media (max-width: 768px) {
-  .special-support-section {
-    padding: 0 !important;
+  .whatsapp-cta-section {
+    padding: 15px 10px;
   }
-  .special-support-title {
-    background: #ffffff !important;
-    font-size: 1rem !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    width: 100% !important;
-    margin: 0 0 30px 0 !important;
-    padding: 20px 0px !important; /* Proper strip padding */
-    border-bottom: 2px solid #003B6F;
-  }
-  .support-grid {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 8px !important;
-    padding: 0 10px 40px; /* Padding for the grid on the new background */
-  }
-  .support-card {
-    width: calc(25% - 10px) !important;
-    min-width: 80px !important;
-    margin-bottom: 10px !important;
-  }
-  .support-info-box {
-    padding: 5px 2px !important;
-  }
-  .support-info-box p {
-    font-size: 0.55rem !important;
-    line-height: 1 !important;
-  }
-  .support-img-box {
-    aspect-ratio: 1/1 !important; /* Square for thumbnails on mobile */
+  .whatsapp-cta-banner {
+    flex-wrap: nowrap;
+    gap: 8px;
   }
 }
 
