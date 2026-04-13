@@ -776,6 +776,9 @@ const App = () => {
         </div>
       </section>
 
+      {/* New Journey Section Implementation */}
+      <JourneySection />
+
        {/* Programs We Offer Section [NEW] */}
       <section className="programs reveal" id="programs">
         <h2 className="programs-title">PROGRAMS WE OFFER</h2>
@@ -814,9 +817,6 @@ const App = () => {
           </div>
         </div>
       </section>
-
-      {/* New Journey Section Implementation */}
-      <JourneySection />
 
       {/* Community Row Header [REFINED] */}
       <section className="community-cta reveal" style={{ position: 'relative', overflow: 'visible' }}>
