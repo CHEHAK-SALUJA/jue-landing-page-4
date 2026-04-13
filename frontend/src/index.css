@@ -3644,7 +3644,7 @@ h3 {
 
 @media (max-width: 768px) {
   .japan-choice-section {
-    padding: 10px 12px 20px; /* Reduced top padding from 20px */
+    padding: 30px 12px 40px; /* Increased top padding to 30px */
   }
 
   /* Standardized Header Sizes */
