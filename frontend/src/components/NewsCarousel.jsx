@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 import news1 from '../assets/ai_images/news_1.png';
 import news2 from '../assets/ai_images/news_2.png';
@@ -17,6 +17,7 @@ const defaultNews = [
 ];
 
 export default function NewsCarousel({ title = 'News & Press Release', items = defaultNews }) {
+  const [activeIndex, setActiveIndex] = useState(0);
   const trackRef = useRef(null);
   const touchStartX = useRef(null);
   const isTeleporting = useRef(false);
@@ -70,13 +71,60 @@ export default function NewsCarousel({ title = 'News & Press Release', items = d
     track.scrollBy({ left: diff > 0 ? cardWidth : -cardWidth, behavior: 'smooth' });
   };
 
+  const handleSwap = (clickedIdx) => {
+    setActiveIndex(clickedIdx);
+  };
+
+  // Items for sidebar (the next 3 after activeIndex, or wrap around)
+  const getSidebarItems = () => {
+    const list = [];
+    for (let i = 1; i <= 3; i++) {
+       const idx = (activeIndex + i) % items.length;
+       list.push({ ...items[idx], originalIndex: idx });
+    }
+    return list;
+  };
+
+  const sidebarItems = getSidebarItems();
+
   return (
     <div className="news-carousel-wrapper">
       <h2 className="news-title">{title}</h2>
 
+      {/* Mobile Swap Layout [NEW] */}
+      <div className="news-mobile-split">
+         <div className="news-main-card news-card">
+            <div className="news-card__image main-img">
+              <img src={items[activeIndex].img} alt="Main news" />
+            </div>
+            <div className="news-card__body">
+               <p className="news-card__date">{items[activeIndex].date}</p>
+               <p className="news-card__text">{items[activeIndex].text}</p>
+            </div>
+         </div>
+         <div className="news-sidebar">
+            {sidebarItems.map((item, idx) => (
+              <div 
+                className="news-side-card news-card" 
+                key={idx}
+                onClick={() => handleSwap(item.originalIndex)}
+              >
+                <div className="news-card__image-mini">
+                   <img src={item.img} alt="Side news" />
+                </div>
+                <div className="news-card__body-mini">
+                   <p className="news-card__date-mini">{item.date}</p>
+                   <p className="news-card__text-mini">{item.text}</p>
+                </div>
+              </div>
+            ))}
+         </div>
+      </div>
+
+      {/* Desktop Snap Track — Visible only on Desktop via CSS */}
       <div
         ref={trackRef}
-        className="news-snap-track"
+        className="news-snap-track desktop-only"
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
         onScroll={handleScroll}
