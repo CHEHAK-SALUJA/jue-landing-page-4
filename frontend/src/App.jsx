@@ -966,68 +966,75 @@ const App = () => {
 
       {/* Special Support for Indian Students Section [REDESIGNED] */}
       <section className="special-support-section reveal" id="special-support">
-        <h2 className="special-support-title">Special Support for Indian Students</h2>
-        <div className="support-grid">
-          {specialSupportSteps.map((step, idx) => (
-            <div 
-              key={idx} 
-              className={`support-card ${selectedSupport === step.id ? 'active-card-support' : ''}`}
-              onClick={(e) => {
-                setSelectedSupport(step.id);
-                // Scroll to the active detail box on mobile
-                const target = document.getElementById('support-detail-anchor');
-                if (target) {
-                  const offset = 80; // Margin for header
-                  const bodyRect = document.body.getBoundingClientRect().top;
-                  const elementRect = target.getBoundingClientRect().top;
-                  const elementPosition = elementRect - bodyRect;
-                  const offsetPosition = elementPosition - offset;
-                  window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                }
-              }}
-            >
-              <div className="support-img-box">
-                <img src={step.img} alt={step.title} />
-              </div>
-              <div className="support-info-box">
-                <p>{step.title}</p>
-              </div>
-            </div>
-          ))}
+        <div className="special-support-header">
+          <h2 className="special-support-line1">Special Support for</h2>
+          <h2 className="special-support-line2">Indian Students</h2>
         </div>
-      </section>
-
-      {/* Detail Anchor for auto-scroll */}
-      <div id="support-detail-anchor"></div>
-
-      {/* Special Support Detail Section [UPGRADED INTERACTIVE SUB-CAROUSEL] */}
-      <section className="about-program-section reveal active" style={{ padding: '0 20px' }}>
-        <div className="about-program-container">
-          <div className="about-program-slider sub-carousel-container">
-            {/* Arrows flanking the image for sub-slide navigation */}
-            <div className="support-detail-layout">
-              <div className="image-carousel-unit">
-                <button className="sub-arrow left" onClick={prevSupportSlide}>‹</button>
-                <div className={`about-program-image sub-image ${slideAnim}`}>
-                  <img src={supportSlides[selectedSupport][activeSupportSlide].img} alt="Support" />
+        <div className="support-grid-rows">
+          {[0, 1, 2].map((rowIdx) => {
+            const rowItems = specialSupportSteps.slice(rowIdx * 2, rowIdx * 2 + 2);
+            const isRowActive = rowItems.some(item => item.id === selectedSupport);
+            
+            return (
+              <React.Fragment key={rowIdx}>
+                <div className="support-row-pair">
+                  {rowItems.map((step) => (
+                    <div 
+                      key={step.id} 
+                      className={`support-card ${selectedSupport === step.id ? 'active-card-support' : ''}`}
+                      onClick={() => {
+                        if (selectedSupport === step.id) {
+                          setSelectedSupport(null);
+                        } else {
+                          setSelectedSupport(step.id);
+                          // Optional: scroll slightly to keep row at top
+                        }
+                      }}
+                    >
+                      <div className="support-img-box">
+                        <img src={step.img} alt={step.title} />
+                      </div>
+                      <div className="support-info-box">
+                        <p>{step.title}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <button className="sub-arrow right" onClick={nextSupportSlide}>›</button>
-              </div>
-              
-              <div className={`about-program-info sub-info ${slideAnim}`}>
-                <h2 className="about-program-title">{supportSlides[selectedSupport][activeSupportSlide].title}</h2>
-                <div className="about-program-underline"></div>
-                <p className="about-program-text">
-                  {supportSlides[selectedSupport][activeSupportSlide].text}
-                </p>
-                <div className="slide-dots">
-                   {supportSlides[selectedSupport].map((_, i) => (
-                     <span key={i} className={`slide-dot ${i === activeSupportSlide ? 'active' : ''}`}></span>
-                   ))}
+
+                {/* Inline Slider for this Row */}
+                <div className={`row-slider-wrapper ${isRowActive ? 'expanded' : ''}`}>
+                  {isRowActive && selectedSupport && supportSlides[selectedSupport] && (
+                    <div className="about-program-container inline-slider">
+                      <div className="about-program-slider sub-carousel-container">
+                        <div className="support-detail-layout">
+                          <div className="image-carousel-unit">
+                            <button className="sub-arrow left" onClick={prevSupportSlide}>‹</button>
+                            <div className={`about-program-image sub-image ${slideAnim}`}>
+                              <img src={supportSlides[selectedSupport][activeSupportSlide].img} alt="Support" />
+                            </div>
+                            <button className="sub-arrow right" onClick={nextSupportSlide}>›</button>
+                          </div>
+                          
+                          <div className={`about-program-info sub-info ${slideAnim}`}>
+                            <h2 className="about-program-title">{supportSlides[selectedSupport][activeSupportSlide].title}</h2>
+                            <div className="about-program-underline"></div>
+                            <p className="about-program-text">
+                              {supportSlides[selectedSupport][activeSupportSlide].text}
+                            </p>
+                            <div className="slide-dots">
+                               {supportSlides[selectedSupport].map((_, i) => (
+                                 <span key={i} className={`slide-dot ${i === activeSupportSlide ? 'active' : ''}`}></span>
+                               ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-            </div>
-          </div>
+              </React.Fragment>
+            );
+          })}
         </div>
       </section>
 
@@ -1054,13 +1061,17 @@ const App = () => {
             Discover how Education In JAPAN can give you unique opportunities for personal<br className="desktop-break" /> growth and career success.
           </p>
           <button 
-            className="alumni-btn" 
+            className={`alumni-btn ${!showStories ? 'blink-btn' : ''}`} 
             onClick={() => {
-              setShowStories(true);
-              setTimeout(() => document.getElementById('success').scrollIntoView({ behavior: 'smooth' }), 100);
+              if (!showStories) {
+                setShowStories(true);
+                setTimeout(() => document.getElementById('success').scrollIntoView({ behavior: 'smooth' }), 100);
+              } else {
+                setShowStories(false);
+              }
             }}
           >
-            Read Student Stories
+            {showStories ? 'Hide Student Stories' : 'Read Student Stories'}
           </button>
         </div>
       </section>
